@@ -1,4 +1,4 @@
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { Text, TextInput, View } from 'react-native';
 
 interface InputProps extends React.ComponentProps<typeof TextInput> {

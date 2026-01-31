@@ -1,4 +1,4 @@
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 
 interface ButtonProps extends React.ComponentProps<typeof TouchableOpacity> {

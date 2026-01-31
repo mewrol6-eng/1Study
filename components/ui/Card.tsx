@@ -1,4 +1,4 @@
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { View } from 'react-native';
 
 interface CardProps extends React.ComponentProps<typeof View> {

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { SafeAreaView, View } from 'react-native';
 
 interface ScreenWrapperProps extends React.ComponentProps<typeof View> {

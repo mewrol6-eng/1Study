@@ -1,143 +1,196 @@
+import { cn } from '@/lib/utils';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { cn } from 'nativewind';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeInDown, FadeInUp, ZoomIn } from 'react-native-reanimated';
 import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
-import { Header } from '../../components/ui/Header';
 import { ScreenWrapper } from '../../components/ui/ScreenWrapper';
 
+const getGreeting = () => {
+  const hours = new Date().getHours();
+  if (hours < 12) return 'Доброе утро';
+  if (hours < 18) return 'Добрый день';
+  return 'Добрый вечер';
+};
+
+const getDateString = () => {
+  const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+  const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+  const date = new Date();
+  return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]}`;
+}
+
 export default function DashboardScreen() {
+  const router = useRouter();
+  const greeting = getGreeting();
+  const dateString = getDateString();
+
   return (
-    <ScreenWrapper className="pb-24">
-      {/* Top App Bar */}
-      <Header
-        showBack={false}
-        title=""
-        className="bg-white/90 dark:bg-background-dark/90 backdrop-blur-md"
-        rightElement={
-          <View className="flex-row items-center gap-3">
-            <View className="flex-row items-center gap-3">
-              <View className="size-9 rounded-full border border-primary/20 p-0.5 overflow-hidden">
-                <Image
-                  source={{ uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuBlTjWkoctqZk0kVN7DWWJ6qbRNI04pI4PZ393ygzP5wNuv-6UiPwrcvDo3G4VvY85Cbo5FVf_9Ydqgbdxxpw3_vmcr9K0Fy5woPfrBdEsHI0ojW1HEOgfCiurXR2T7IHvCnkjllzJiQXfsbKA-dzDQmeZ6vzsV_Jkc4x2Roy4A1AJepDrhACccnrZI-RSaUhmUB3mg_tgmLW7rIYTKjnkL2c1QBfqJft0nukvSWK1g7EM5FRy7xnwmU2ezynhiTXEqZjYO7OhWwqLY" }}
-                  className="w-full h-full bg-cover"
-                />
-              </View>
-              <View>
-                <Text className="text-[10px] uppercase tracking-widest text-slate-500 font-medium">Студент</Text>
-                <Text className="text-primary text-sm font-bold leading-tight">Александр В.</Text>
-              </View>
-            </View>
-            <TouchableOpacity className="p-2">
-              <Ionicons name="notifications-outline" size={24} className="text-primary" />
+    <ScreenWrapper className="bg-slate-50 dark:bg-slate-950">
+      {/* Background Decoration */}
+      <View className="absolute top-0 left-0 right-0 h-[50%] overflow-hidden" pointerEvents="none">
+        <LinearGradient
+          colors={['rgba(19, 236, 200, 0.08)', 'rgba(255, 255, 255, 0)']}
+          className="absolute inset-0"
+        />
+        <Animated.View entering={FadeInDown.duration(1000)} className="absolute -top-24 -right-24 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
+        <Animated.View entering={FadeInDown.duration(1000).delay(200)} className="absolute top-10 -left-10 w-40 h-40 bg-blue-500/5 rounded-full blur-2xl" />
+      </View>
+
+      <ScrollView contentContainerStyle={{ paddingBottom: 130, paddingTop: 60 }} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        {/* Header Section */}
+        <View className="px-6 mb-8 flex-row justify-between items-start">
+          <Animated.View entering={FadeInDown.duration(600)}>
+            <Text className="text-slate-600 text-xs font-bold uppercase tracking-widest mb-1">{dateString}</Text>
+            <Text className="text-3xl font-bold text-slate-900 dark:text-white leading-tight">
+              {greeting}, <Text className="text-emerald-600">Saidamir</Text>
+            </Text>
+          </Animated.View>
+
+          <Animated.View entering={ZoomIn.duration(600).delay(100)}>
+            <TouchableOpacity onPress={() => router.push('/(tabs)/profile')} className="size-12 rounded-full border-2 border-white dark:border-slate-800 shadow-lg relative overflow-hidden bg-slate-200">
+              <LinearGradient colors={['#13ecc8', '#0f766e']} className="absolute inset-0 items-center justify-center">
+                <Text className="text-white font-bold text-lg">S</Text>
+              </LinearGradient>
             </TouchableOpacity>
-          </View>
-        }
-      />
-
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-        {/* Credit Balance */}
-        <View className="p-4">
-          <Card className="flex-row justify-between items-center p-5 border border-slate-200 dark:border-slate-800">
-            <View className="gap-1">
-              <Text className="text-slate-500 text-[10px] uppercase tracking-widest font-semibold">Доступный баланс</Text>
-              <View className="flex-row items-baseline gap-1">
-                <Text className="text-2xl font-bold tracking-tight text-primary">15.00</Text>
-                <Text className="text-xs font-medium text-slate-500">CRD</Text>
-              </View>
+            <View className="absolute -bottom-1 -right-1 size-5 bg-white dark:bg-slate-900 rounded-full items-center justify-center border-2 border-slate-50 dark:border-slate-950">
+              <View className="size-2.5 bg-green-500 rounded-full animate-pulse" />
             </View>
-            <Button label="Пополнить" size="sm" className="px-4 py-2" />
-          </Card>
+          </Animated.View>
         </View>
 
-        {/* Next Lesson */}
-        <View className="px-4">
-          <View className="flex-row items-center justify-between mb-2">
-            <Text className="text-[11px] uppercase tracking-[0.2em] font-bold text-slate-500">Ближайшее занятие</Text>
-            <Text className="text-[10px] text-primary font-mono font-bold">ID: 482-TX</Text>
-          </View>
-          <View className="bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
-            <View className="h-32 bg-slate-50 dark:bg-slate-900 relative items-center justify-center overflow-hidden border-b border-slate-200 dark:border-slate-800">
-              {/* Blueprint grid effect would be here, handled by image or CSS bg */}
-              <View className="relative z-10 text-center px-6">
-                <Text className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Курс: Высшая математика</Text>
-                <Text className="text-lg font-bold text-primary tracking-tight">Основы тригонометрии</Text>
-              </View>
-            </View>
-            <View className="flex-row divide-x divide-slate-200 dark:divide-slate-800 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark">
-              {['00', '45', '12'].map((val, i) => (
-                <View key={i} className="flex-1 py-3 items-center">
-                  <Text className="text-xs font-mono font-bold text-primary">{val}</Text>
-                  <Text className="text-[8px] uppercase tracking-tighter text-slate-500">{['Часов', 'Минут', 'Секунд'][i]}</Text>
-                </View>
-              ))}
-            </View>
-            <View className="p-4 flex-row items-center justify-between">
-              <View>
-                <Text className="text-[9px] uppercase tracking-wider text-slate-500 font-medium">Преподаватель</Text>
-                <Text className="text-xs font-bold text-primary">Анна Петрова, PhD</Text>
-              </View>
-              <Button variant="outline" label="Войти в класс" size="sm" className="border-primary text-primary" textClassName="text-primary" />
-            </View>
-          </View>
-        </View>
+        {/* Hero Card: Balance & Stats */}
+        <Animated.View entering={FadeInUp.duration(600).delay(200)} className="px-6 mb-8">
+          <View className="w-full h-48 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/20 relative bg-slate-900">
+            <LinearGradient
+              colors={['#0f172a', '#1e293b']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              className="absolute inset-0"
+            />
+            {/* Abstract Art in Card */}
+            <View className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl" />
+            <View className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/50 to-transparent" />
 
-        {/* Analytics */}
-        <View className="p-4">
-          <View className="flex-row items-center justify-between mb-3">
-            <Text className="text-[11px] uppercase tracking-[0.2em] font-bold text-slate-500">Аналитика прогресса</Text>
-            <Text className="text-[10px] text-emerald-600 font-bold">+12.4%</Text>
-          </View>
-          <Card className="p-5 border border-slate-200 dark:border-slate-800">
-            <View className="h-32 w-full mb-4 flex-row items-end justify-between gap-1">
-              {/* Bars simulation */}
-              {[35, 25, 30, 95, 20, 38, 5].map((h, i) => (
-                <View key={i} className="flex-1 flex-col items-center gap-2 h-full justify-end">
-                  <View className={cn("w-full rounded-t-sm", i === 3 ? "bg-primary" : "bg-primary/20", `h-[${h}%]`)} />
-                  <Text className={cn("text-[8px] font-medium", i === 3 ? "text-primary font-bold" : "text-slate-500")}>
-                    {['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'][i]}
-                  </Text>
-                </View>
-              ))}
-            </View>
-            <View className="flex-row items-end justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-              <View>
-                <Text className="text-2xl font-bold tracking-tighter text-primary">4.5<Text className="text-xs ml-1 font-medium text-slate-500">h</Text></Text>
-                <Text className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Активность за неделю</Text>
-              </View>
-              <View className="items-end">
-                <Text className="text-xs font-bold text-primary">92/100</Text>
-                <Text className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Индекс KPI</Text>
-              </View>
-            </View>
-          </Card>
-        </View>
-
-        {/* Recommendations Carousel */}
-        <View className="pb-8">
-          <View className="flex-row items-center justify-between px-4 mb-3">
-            <Text className="text-[11px] uppercase tracking-[0.2em] font-bold text-slate-500">Рекомендации</Text>
-            <TouchableOpacity><Text className="text-primary text-[10px] font-bold uppercase tracking-widest">Каталог</Text></TouchableOpacity>
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}>
-            {[
-              { code: "Design-01", title: "Основы UI/UX Дизайна", modules: 12, opacity: false },
-              { code: "Prog-04", title: "Python для анализа данных", modules: 24, opacity: true },
-            ].map((item, i) => (
-              <View key={i} className={cn("flex-none w-56 border border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark", item.opacity && "opacity-80")}>
-                <View className={cn("h-2", i === 0 ? "bg-primary" : "bg-slate-500")} />
-                <View className="p-4">
-                  <Text className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">{item.code}</Text>
-                  <Text className="text-sm font-bold text-primary leading-tight mb-4">{item.title}</Text>
-                  <View className="flex-row items-center justify-between">
-                    <Text className="text-[9px] font-mono text-slate-500 text-primary-dark">{item.modules} МОДУЛЕЙ</Text>
-                    <MaterialIcons name="arrow-forward" size={14} className="text-primary" />
+            <View className="p-6 flex-1 justify-between">
+              <View className="flex-row justify-between items-start">
+                <View>
+                  <Text className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Текущий баланс</Text>
+                  <View className="flex-row items-baseline gap-1">
+                    <Text className="text-4xl font-extrabold text-white tracking-tight">15.00</Text>
+                    <Text className="text-emerald-400 font-bold text-sm">CRD</Text>
                   </View>
                 </View>
+                <View className="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/5">
+                  <Text className="text-white text-xs font-bold">Pro Account</Text>
+                </View>
               </View>
+
+              <View className="flex-row items-center gap-4">
+                <Button
+                  label="Пополнить"
+                  size="sm"
+                  className="bg-primary px-6 h-10 rounded-xl"
+                  textClassName="text-slate-900 font-bold"
+                  onPress={() => router.push('/subscription/plans')}
+                />
+                <TouchableOpacity className="size-10 rounded-xl bg-white/10 items-center justify-center border border-white/5">
+                  <MaterialIcons name="history" size={20} className="text-white" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Animated.View>
+
+        {/* Quick Actions Grid */}
+        <View className="px-6 mb-8 relative z-50">
+          <Text className="text-lg font-bold text-slate-900 dark:text-white mb-4">Быстрые действия</Text>
+          <View className="flex-row gap-4">
+            {[
+              { icon: 'school', label: 'Уроки', color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20', route: '/courses' },
+              { icon: 'event-note', label: 'Расписание', color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20', route: '/schedule' },
+              { icon: 'leaderboard', label: 'Рейтинг', color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20', route: '/leaderboard' },
+              { icon: 'support-agent', label: 'Помощь', color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20', route: '/support' },
+            ].map((item, i) => (
+              <TouchableOpacity
+                key={i}
+                onPress={() => router.push(item.route as any)}
+                activeOpacity={0.6}
+                delayPressIn={0}
+                className="flex-1 items-center gap-2"
+                hitSlop={8}
+              >
+                <View className={cn("size-16 rounded-[1.5rem] items-center justify-center shadow-sm border border-slate-100 dark:border-slate-800 active:scale-95 transition-all", item.bg)} pointerEvents="none">
+                  <MaterialIcons name={item.icon as any} size={28} className={item.color} />
+                </View>
+                <Text className="text-xs font-bold text-slate-600 dark:text-slate-400" pointerEvents="none">{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Up Next / Live Section */}
+        <Animated.View entering={FadeInUp.duration(600).delay(400)} className="px-6 mb-8">
+          <View className="flex-row items-center justify-between mb-4">
+            <Text className="text-lg font-bold text-slate-900 dark:text-white">На очереди</Text>
+            <View className="flex-row items-center gap-2">
+              <View className="px-2 py-0.5 bg-red-500/10 rounded-md border border-red-500/20">
+                <Text className="text-[10px] font-bold text-red-500 uppercase tracking-wider animate-pulse">Live</Text>
+              </View>
+              <MaterialIcons name="chevron-right" size={20} className="text-slate-300" />
+            </View>
+          </View>
+
+          <TouchableOpacity
+            className="bg-white dark:bg-card-dark rounded-[2rem] p-4 shadow-sm border border-slate-100 dark:border-slate-800 flex-row gap-4 items-center active:scale-[0.99] transition-all"
+            onPress={() => router.push('/courses/1')}
+          >
+            <View className="relative w-20 h-20 rounded-2xl bg-slate-900 overflow-hidden items-center justify-center">
+              <Text className="text-white font-extrabold text-xl">14:00</Text>
+              <Text className="text-slate-300 text-[9px] font-bold uppercase mt-1">Сегодня</Text>
+            </View>
+
+            <View className="flex-1">
+              <Text className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Точные науки</Text>
+              <Text className="text-lg font-bold text-slate-900 dark:text-white leading-tight mb-1">Основы тригонометрии</Text>
+              <View className="flex-row items-center gap-2">
+                <View className="flex-row items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                  <Ionicons name="time-outline" size={10} className="text-slate-500" />
+                  <Text className="text-[10px] text-slate-500 font-bold">45 мин</Text>
+                </View>
+                <Text className="text-[10px] text-slate-500 font-bold">• Проф. Петрова</Text>
+              </View>
+            </View>
+
+            <View className="size-10 rounded-full bg-slate-50 dark:bg-slate-800 items-center justify-center border border-slate-100 dark:border-slate-700">
+              <MaterialIcons name="play-arrow" size={20} className="text-slate-900 dark:text-white" />
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+
+        {/* Continue Learning */}
+        <Animated.View entering={FadeInUp.duration(600).delay(500)} className="px-6 mb-4">
+          <Text className="text-lg font-bold text-slate-900 dark:text-white mb-4">Продолжить</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12, paddingRight: 24 }}>
+            {[
+              { title: 'Python Basics', progress: 75, color: 'bg-emerald-500', icon: 'code' },
+              { title: 'UX Design', progress: 40, color: 'bg-purple-500', icon: 'brush' },
+              { title: 'Marketing', progress: 20, color: 'bg-orange-500', icon: 'campaign' },
+            ].map((item, i) => (
+              <TouchableOpacity key={i} onPress={() => router.push('/courses/1')} className="w-36 bg-white dark:bg-card-dark rounded-[1.5rem] p-4 shadow-sm border border-slate-100 dark:border-slate-800 relative z-10 active:scale-95 transition-all">
+                <View className={cn("size-8 rounded-full items-center justify-center mb-3", item.color, "bg-opacity-20")}>
+                  <MaterialIcons name={item.icon as any} size={16} className={item.color.replace('bg-', 'text-')} />
+                </View>
+                <Text className="text-sm font-bold text-slate-900 dark:text-white mb-3 leading-tight">{item.title}</Text>
+                <View className="h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <View className={cn("h-full rounded-full", item.color)} style={{ width: `${item.progress}%` }} />
+                </View>
+              </TouchableOpacity>
             ))}
           </ScrollView>
-        </View>
+        </Animated.View>
+
       </ScrollView>
     </ScreenWrapper>
   );

@@ -1,6 +1,6 @@
+import { cn } from '@/lib/utils';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { cn } from 'nativewind';
 import { useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Button } from '../../components/ui/Button';
@@ -24,7 +24,7 @@ export default function LearningGoalsScreen() {
             <View className="bg-white/90 dark:bg-background-dark/90 backdrop-blur-md pt-safe-top border-b border-slate-100 dark:border-slate-800">
                 <View className="flex-row items-center justify-center gap-3 py-6">
                     <View className="h-1.5 w-1.5 rounded-full bg-slate-200 dark:bg-slate-700" />
-                    <View className="h-1.5 w-8 rounded-full bg-primary shadow-lg shadow-primary/50" />
+                    <View className="h-1.5 w-8 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50" />
                     <View className="h-1.5 w-1.5 rounded-full bg-slate-200 dark:bg-slate-700" />
                     <View className="h-1.5 w-1.5 rounded-full bg-slate-200 dark:bg-slate-700" />
                 </View>
@@ -43,7 +43,7 @@ export default function LearningGoalsScreen() {
                 {/* Main Subjects */}
                 <View className="mb-8">
                     <View className="flex-row items-center gap-2 mb-4">
-                        <MaterialIcons name="stars" size={20} className="text-primary" />
+                        <MaterialIcons name="stars" size={20} className="text-emerald-600" />
                         <Text className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white">Основные предметы</Text>
                     </View>
 
@@ -103,7 +103,7 @@ export default function LearningGoalsScreen() {
                 {/* Languages */}
                 <View className="mb-6">
                     <View className="flex-row items-center gap-2 mb-4">
-                        <MaterialIcons name="translate" size={20} className="text-primary" />
+                        <MaterialIcons name="translate" size={20} className="text-emerald-600" />
                         <Text className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white">Языки</Text>
                     </View>
 
@@ -116,17 +116,17 @@ export default function LearningGoalsScreen() {
                         ].map((lang, i) => (
                             <TouchableOpacity
                                 key={i}
-                                className={cn("flex-row items-center gap-4 rounded-xl p-4 border", lang.selected ? "bg-white dark:bg-card-dark border-primary shadow-sm" : "bg-white dark:bg-card-dark border-slate-200 dark:border-slate-800")}
+                                className={cn("flex-row items-center gap-4 rounded-xl p-4 border", lang.selected ? "bg-white dark:bg-card-dark border-emerald-500 shadow-sm" : "bg-white dark:bg-card-dark border-slate-200 dark:border-slate-800")}
                             >
-                                <View className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-bold text-sm tracking-tighter border", lang.selected ? "bg-primary/10 text-primary border-primary/20" : "bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700")}>
-                                    <Text className={cn("font-bold text-sm", lang.selected ? "text-primary" : "text-slate-500")}>{lang.code}</Text>
+                                <View className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-bold text-sm tracking-tighter border", lang.selected ? "bg-emerald-100 text-emerald-700 border-emerald-500" : "bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700")}>
+                                    <Text className={cn("font-bold text-sm", lang.selected ? "text-emerald-700" : "text-slate-500")}>{lang.code}</Text>
                                 </View>
                                 <View className="flex-1 min-w-0">
                                     <Text className="font-bold text-slate-900 dark:text-white text-lg">{lang.title}</Text>
-                                    <Text className={cn("text-sm truncate", lang.selected ? "text-primary font-medium" : "text-slate-500")}>{lang.sub}</Text>
+                                    <Text className={cn("text-sm truncate", lang.selected ? "text-emerald-600 font-medium" : "text-slate-500")}>{lang.sub}</Text>
                                 </View>
                                 {lang.selected ? (
-                                    <View className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                                    <View className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
                                         <MaterialIcons name="check" size={14} color="white" />
                                     </View>
                                 ) : (

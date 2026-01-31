@@ -1,6 +1,6 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Button } from '../../components/ui/Button';
 import { ScreenWrapper } from '../../components/ui/ScreenWrapper';

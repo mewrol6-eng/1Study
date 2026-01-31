@@ -1,5 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScreenWrapper } from '../../components/ui/ScreenWrapper';
 

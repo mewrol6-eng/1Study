@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { cn } from 'nativewind';
+import { cn } from '@/lib/utils';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 interface HeaderProps {
